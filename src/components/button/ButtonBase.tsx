@@ -5,10 +5,11 @@ import { colors } from '../../constants/colors';
 interface Props {
     disabled: boolean;
     children: ReactNode;
+    onClick?: () => void;
 }
 
-export const ButtonBase = ({ disabled, children }: Props) => (
-    <button disabled={disabled}>
+export const ButtonBase = ({ disabled, children, onClick }: Props) => (
+    <button disabled={disabled} onClick={onClick}>
         <GradientBorder className="w-[17rem] h-[4rem] p-px flex justify-center items-center rounded-[32px] filter shadow">
             <div className="w-full h-full flex justify-center items-center rounded-[32px] bg-black-500 px-8">
                 {children}

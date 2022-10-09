@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
-import { ButtonBase } from './ButtonBase';
+import { colors } from '../../../constants/colors';
+import { GradientButtonBase } from './GradientButtonBase';
 
 interface Props {
     disabled: boolean;
@@ -8,18 +9,18 @@ interface Props {
     onClick?: () => void;
 }
 
-export const ButtonWithIcon = ({
+export const GradientButtonWithIcon = ({
     disabled,
     text,
     children,
     onClick,
 }: Props) => (
-    <ButtonBase disabled={disabled} onClick={onClick}>
+    <GradientButtonBase disabled={disabled} onClick={onClick}>
         <div className="w-full flex justify-between">
             {children}
-            <span className="color-gradient tracking-wider text-xl">
+            <span className={`tracking-wider text-xl text-[${colors.white}]`}>
                 {text}
             </span>
         </div>
-    </ButtonBase>
+    </GradientButtonBase>
 );

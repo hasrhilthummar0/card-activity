@@ -1,12 +1,21 @@
+import { useContext } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { Button } from '../button/Button';
 import { ButtonWithIcon } from '../button/ButtonWithIcon';
 import copyIcon from './../../assets/icons/copy-icon.svg';
+import keyIcon from './../../assets/icons/key-icon.svg';
 import horizontalLogo from './../../assets/icons/horizontal-logo.png';
 import { formatAddress } from '../../utils/formatAddress';
+import { WalletConnectContext } from '../../context';
+import { GradientButtonWithIcon } from '../button/gradient/GradientButtonWithIcon';
 
 export const Navigation = () => {
-    const address = '0xfA2bAC4b80DeAA1594Cd29A920367E4c038c7620';
+    const { account, activateBrowserWallet } = useContext(WalletConnectContext);
+
+    const activate = async () => {
+        await activateBrowserWallet();
+    };
+
     const balance = '3600 LAKE | 1.2 ETH';
     return (
         <nav className="relative flex flex-wrap items-center justify-between px-8 py-2 bg-black-500">
@@ -20,19 +29,34 @@ export const Navigation = () => {
                 </div>
 
                 <div className="flex items-center justify-end">
-                    <Button disabled={true} text={balance}></Button>
-                    <div className="ml-6">
-                        <ButtonWithIcon
-                            disabled={true}
-                            text={formatAddress(address)}
+                    {!!account ? (
+                        <>
+                            <Button disabled={true} text={balance}></Button>
+                            <div className="ml-6">
+                                <ButtonWithIcon
+                                    disabled={true}
+                                    text={formatAddress(account)}
+                                >
+                                    <CopyToClipboard text={account}>
+                                        <button>
+                                            <img
+                                                src={copyIcon}
+                                                alt="copy"
+                                            ></img>
+                                        </button>
+                                    </CopyToClipboard>
+                                </ButtonWithIcon>
+                            </div>
+                        </>
+                    ) : (
+                        <GradientButtonWithIcon
+                            disabled={false}
+                            text="CONNECT WALLET"
+                            onClick={activate}
                         >
-                            <CopyToClipboard text={address}>
-                                <button>
-                                    <img src={copyIcon} alt="copy"></img>
-                                </button>
-                            </CopyToClipboard>
-                        </ButtonWithIcon>
-                    </div>
+                            <img src={keyIcon} alt="copy"></img>
+                        </GradientButtonWithIcon>
+                    )}
                 </div>
             </div>
         </nav>

@@ -6,11 +6,9 @@ import { Providers } from './Providers';
 
 export const App = () => (
     <Providers>
-        <Page>
-            <Switch>
-                <Route exact path="/" component={Main} />
-                <Redirect exact from="*" to="/" />
-            </Switch>
-        </Page>
+        <Switch>
+            <Route exact path="/" component={Main} />
+            <Redirect exact from="*" to="/" />
+        </Switch>
     </Providers>
 );
