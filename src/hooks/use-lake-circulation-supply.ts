@@ -1,0 +1,25 @@
+import { ASSET_LAKE } from '../constants/assets';
+import { Contract } from 'ethers';
+import { ERC20Abi } from '../abis/ERC20';
+import { JsonRpcProvider } from '@ethersproject/providers';
+import { parseBigNumber } from '../utils/parseBigNumber';
+import { useConfig } from './use-config';
+
+export const useLakeCirculationSupply = async (
+    provider: JsonRpcProvider,
+): Promise<number> => {
+    const { lakeAddress, vestingScheduleAddress, usdtLakePoolAddress } =
+        useConfig();
+    const lakeTokenContract = new Contract(lakeAddress, ERC20Abi, provider);
+    const totalSupply = await lakeTokenContract.callStatic.totalSupply();
+    const vestingScheduleContractBalance =
+        await lakeTokenContract.callStatic.balanceOf(vestingScheduleAddress);
+    const uniswapPoolBalance = await lakeTokenContract.callStatic.balanceOf(
+        usdtLakePoolAddress,
+    );
+    return (
+        parseBigNumber(totalSupply, ASSET_LAKE.decimals) -
+        parseBigNumber(vestingScheduleContractBalance, ASSET_LAKE.decimals) -
+        parseBigNumber(uniswapPoolBalance, ASSET_LAKE.decimals)
+    );
+};
