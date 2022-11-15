@@ -147,7 +147,7 @@ export const ProvideLiquidityWidget = () => {
                 />
                 <span className="text-sm tracking-[.1em] my-2">
                     {formatValue(lpTokenBalance, ASSET_LP_TOKEN.symbol, 0)}{' '}
-                    TOKENS AVAILABLE
+                    AVAILABLE
                 </span>
                 <StakingModal
                     isOpen={isStakingModalOpen}
@@ -181,7 +181,7 @@ export const ProvideLiquidityWidget = () => {
                     />
                     <span className="text-sm tracking-[.1em] my-2">
                         {formatValue(stakedBalance, ASSET_LP_TOKEN.symbol, 0)}{' '}
-                        TOKENS STAKED
+                        STAKED
                     </span>
                     <UnstakingModal
                         isOpen={isUnstakingModalOpen}

@@ -65,6 +65,9 @@ export const UnstakingModal = ({
             isOpen={isOpen}
             style={customStyles}
             contentLabel="Staking Modal"
+            shouldCloseOnOverlayClick={true}
+            shouldCloseOnEsc={true}
+            onRequestClose={closeModal}
         >
             <div className="flex flex-col">
                 <div className="flex justify-end items-center mb-6">
@@ -101,6 +104,14 @@ export const UnstakingModal = ({
                                 }}
                                 defaultValue={inputValue}
                                 step={0.1}
+                                handleRender={(renderProps) => (
+                                    <div {...renderProps.props}>
+                                        <span className="font-kanit-medium whitespace-nowrap text-xs tracking-[.12em] absolute top-[-1.5rem] left-[-0.75rem]">
+                                            {(inputValue * stakedBalance) / 100}{' '}
+                                            {ASSET_LP_TOKEN.symbol}
+                                        </span>
+                                    </div>
+                                )}
                             />
                         </div>
                         <span className="font-kanit-medium whitespace-nowrap text-xs tracking-[.12em] text-end">

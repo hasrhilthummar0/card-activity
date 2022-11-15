@@ -4,7 +4,7 @@ import { ASSET_LP_TOKEN } from '../../../../constants/assets';
 import { Button } from '../../../button/Button';
 import { ButtonWithSpinner } from '../../../button/ButtonWithSpinner';
 import ReactModal from 'react-modal';
-import { TokenInput } from './TokenInput';
+import { TokenInput } from '../TokenInput';
 import { WalletConnectContext } from '../../../../context';
 import cancelIcon from '../../../../assets/icons/cancel-icon.svg';
 import { parseBigNumber } from '../../../../utils/parseBigNumber';
@@ -80,6 +80,9 @@ export const StakingModal = ({
             isOpen={isOpen}
             style={customStyles}
             contentLabel="Staking Modal"
+            shouldCloseOnOverlayClick={true}
+            shouldCloseOnEsc={true}
+            onRequestClose={closeModal}
         >
             <div className="flex flex-col">
                 <div className="flex justify-end items-center mb-6">
@@ -101,6 +104,7 @@ export const StakingModal = ({
                     </div>
                     <div className="flex flex-col min-w-[20vw]">
                         <TokenInput
+                            tokenSymbol={ASSET_LP_TOKEN.symbol}
                             inputValue={lpTokenInputValue}
                             setMaxInputValue={() =>
                                 onLPTokenValueChange(lpTokenBalance)
@@ -120,7 +124,10 @@ export const StakingModal = ({
                             ) : (
                                 <Button
                                     size="medium"
-                                    disabled={lpTokenInputValue === 0}
+                                    disabled={
+                                        lpTokenInputValue === 0 ||
+                                        lpTokenBalance === 0
+                                    }
                                     text="STAKE"
                                     onClick={onStakeClick}
                                 />
