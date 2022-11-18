@@ -283,7 +283,7 @@ export const ProvideLiquidityModal = ({
                             )}
                             {areSettingsOpen && (
                                 <Settings
-                                    isNewPosition={isNewPosition}
+                                    isRangeVisible={isNewPosition}
                                     tickLower={tickLower}
                                     tickUpper={tickUpper}
                                     nearestTick={nearestTick}

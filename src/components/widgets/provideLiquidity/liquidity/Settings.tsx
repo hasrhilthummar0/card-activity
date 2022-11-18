@@ -3,24 +3,24 @@ import { colors } from '../../../../constants/colors';
 import styled from 'styled-components';
 
 type Props = {
-    isNewPosition: boolean;
-    tickLower: number;
-    tickUpper: number;
-    nearestTick: number;
-    tickSpacing: number;
+    isRangeVisible: boolean;
+    tickLower?: number;
+    tickUpper?: number;
+    nearestTick?: number;
+    tickSpacing?: number;
     slippageTolerance: number;
     transactionDeadline: number;
-    decreaseTickLower: () => void;
-    increaseTickLower: () => void;
-    decreaseTickUpper: () => void;
-    increaseTickUpper: () => void;
+    decreaseTickLower?: () => void;
+    increaseTickLower?: () => void;
+    decreaseTickUpper?: () => void;
+    increaseTickUpper?: () => void;
     onSlippageToleranceChange: (event: any) => void;
     onTransactionDeadlineChange: (event: any) => void;
-    onFullRangeClick: () => void;
+    onFullRangeClick?: () => void;
 };
 
 export const Settings = ({
-    isNewPosition,
+    isRangeVisible,
     tickLower,
     nearestTick,
     tickSpacing,
@@ -37,17 +37,17 @@ export const Settings = ({
 }: Props) => {
     return (
         <SettingsContainer className="w-full flex flex-col p-4 my-4 font-kanit-medium whitespace-nowrap text-xs">
-            {isNewPosition && (
+            {isRangeVisible && (
                 <PriceRange
-                    tickLower={tickLower}
-                    tickUpper={tickUpper}
-                    nearestTick={nearestTick}
-                    tickSpacing={tickSpacing}
-                    decreaseTickLower={decreaseTickLower}
-                    increaseTickLower={increaseTickLower}
-                    decreaseTickUpper={decreaseTickUpper}
-                    increaseTickUpper={increaseTickUpper}
-                    onFullRangeClick={onFullRangeClick}
+                    tickLower={tickLower!}
+                    tickUpper={tickUpper!}
+                    nearestTick={nearestTick!}
+                    tickSpacing={tickSpacing!}
+                    decreaseTickLower={decreaseTickLower!}
+                    increaseTickLower={increaseTickLower!}
+                    decreaseTickUpper={decreaseTickUpper!}
+                    increaseTickUpper={increaseTickUpper!}
+                    onFullRangeClick={onFullRangeClick!}
                 />
             )}
             <div className="flex w-full justify-between">

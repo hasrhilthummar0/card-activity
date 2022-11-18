@@ -1,7 +1,6 @@
 import { CurrencyAmount, Percent } from '@uniswap/sdk-core';
 import { NonfungiblePositionManager, Position } from '@uniswap/v3-sdk';
 
-import { DEFAULT_TRANSACTION_DEADLINE } from '../constants/commons';
 import { IPositionDetails } from '../interfaces/positionDetails.interface';
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { useConfig } from './use-config';
@@ -11,6 +10,8 @@ import { useUsdtToken } from './use-usdt-token';
 
 export const useRemoveLiquidity = async (
     provider: JsonRpcProvider,
+    slippageTolerance: number,
+    transactionDeadline: number,
     account: string,
     positionDetails: IPositionDetails,
     percentage: number,
@@ -27,7 +28,7 @@ export const useRemoveLiquidity = async (
 
         const deadline = (
             new Date().getTime() / 1000 +
-            DEFAULT_TRANSACTION_DEADLINE * 60
+            transactionDeadline * 60
         )
             .toFixed()
             .toString();
@@ -36,7 +37,7 @@ export const useRemoveLiquidity = async (
             NonfungiblePositionManager.removeCallParameters(position, {
                 tokenId: positionDetails.positionId,
                 liquidityPercentage: new Percent(percentage, 100),
-                slippageTolerance: new Percent(1),
+                slippageTolerance: new Percent(slippageTolerance * 100, 10000),
                 deadline,
                 collectOptions: {
                     expectedCurrencyOwed0: CurrencyAmount.fromRawAmount(

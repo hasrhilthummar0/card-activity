@@ -1,6 +1,10 @@
 import '../../../../assets/rc-slider.css';
 
 import { ASSET_LAKE, ASSET_USDT } from '../../../../constants/assets';
+import {
+    DEFAULT_SLIPPAGE_TOLERANCE,
+    DEFAULT_TRANSACTION_DEADLINE,
+} from '../../../../constants/commons';
 import { useContext, useEffect, useState } from 'react';
 
 import { Button } from '../../../button/Button';
@@ -9,12 +13,14 @@ import { ClipLoader } from 'react-spinners';
 import { IPositionDetails } from '../../../../interfaces/positionDetails.interface';
 import { PositionsList } from '../PositionsList';
 import ReactModal from 'react-modal';
+import { Settings } from './Settings';
 import Slider from 'rc-slider';
 import { WalletConnectContext } from '../../../../context';
 import cancelIcon from '../../../../assets/icons/cancel-icon.svg';
 import { colors } from '../../../../constants/colors';
 import { customModalStyle } from '../../../../constants/modal';
 import { formatValue } from '../../../../utils/formatValue';
+import settingsIcon from './../../../../assets/icons/settings-icon.svg';
 import { useRemoveLiquidity } from '../../../../hooks/use-remove-liquidity';
 
 type Props = {
@@ -41,6 +47,13 @@ export const RemoveLiquidityModal = ({
     >(undefined);
     const [inputValue, setInputValue] = useState(0);
     const [isLiquidityRemoving, setIsLiquidityRemoving] = useState(false);
+    const [areSettingsOpen, setAreSettingsOpen] = useState(false);
+    const [slippageTolerance, setSlippageTolerance] = useState(
+        DEFAULT_SLIPPAGE_TOLERANCE,
+    );
+    const [transactionDeadline, setTransactionDeadline] = useState(
+        DEFAULT_TRANSACTION_DEADLINE,
+    );
 
     useEffect(() => {
         setStep(!!selectedPosition ? 2 : 1);
@@ -55,6 +68,8 @@ export const RemoveLiquidityModal = ({
             setIsLiquidityRemoving(true);
             await useRemoveLiquidity(
                 library,
+                slippageTolerance,
+                transactionDeadline,
                 account,
                 selectedPosition,
                 inputValue,
@@ -106,11 +121,48 @@ export const RemoveLiquidityModal = ({
                         </div>
                     ) : (
                         <>
-                            <div className="font-kanit-medium color-gray-gradient text-shadow text-xl tracking-[.12em] text-center mb-4">
-                                {step === 1
-                                    ? 'CHOOSE POSITION'
-                                    : 'REMOVE LIQUIDITY'}
-                            </div>
+                            {step === 1 ? (
+                                <div className="font-kanit-medium color-gray-gradient text-shadow text-xl tracking-[.12em] text-center mb-4">
+                                    CHOOSE POSITION
+                                </div>
+                            ) : (
+                                <div className="w-full flex items-center mb-4 justify-around">
+                                    <div className="font-kanit-medium color-gray-gradient text-shadow text-xl tracking-[.12em] text-center">
+                                        REMOVE LIQUIDITY
+                                    </div>
+                                    <img
+                                        className="w-[1.5rem] h-[1.5rem] cursor-pointer"
+                                        src={settingsIcon}
+                                        alt="settings"
+                                        onClick={() => {
+                                            setAreSettingsOpen(
+                                                !areSettingsOpen,
+                                            );
+                                        }}
+                                    ></img>
+                                </div>
+                            )}
+                            {areSettingsOpen && (
+                                <Settings
+                                    isRangeVisible={false}
+                                    slippageTolerance={slippageTolerance}
+                                    transactionDeadline={transactionDeadline}
+                                    onSlippageToleranceChange={(event: any) => {
+                                        setSlippageTolerance(
+                                            event.target.value ||
+                                                DEFAULT_SLIPPAGE_TOLERANCE,
+                                        );
+                                    }}
+                                    onTransactionDeadlineChange={(
+                                        event: any,
+                                    ) => {
+                                        setTransactionDeadline(
+                                            event.target.value ||
+                                                DEFAULT_TRANSACTION_DEADLINE,
+                                        );
+                                    }}
+                                />
+                            )}
                             <div className="flex flex-col min-w-[20vw]">
                                 {step === 1 ? (
                                     <PositionsList
