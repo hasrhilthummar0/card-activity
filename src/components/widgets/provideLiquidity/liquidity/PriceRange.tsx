@@ -68,6 +68,7 @@ export const PriceRange = ({
                 </div>
                 <div className="flex items-center mx-4">
                     <button
+                        className="hover:scale-105 cursor-pointer transition-transform duration-300"
                         disabled={
                             tickLower <=
                             nearestTick - (TICKS_RANGE / 2) * tickSpacing
@@ -89,6 +90,7 @@ export const PriceRange = ({
                         {lowerPrice}
                     </div>
                     <button
+                        className="hover:scale-105 cursor-pointer transition-transform duration-300"
                         disabled={
                             tickLower >=
                             nearestTick + (TICKS_RANGE / 2 - 1) * tickSpacing
@@ -118,6 +120,7 @@ export const PriceRange = ({
                 </div>
                 <div className="flex items-center mx-4">
                     <button
+                        className="hover:scale-105 cursor-pointer transition-transform duration-300"
                         disabled={
                             tickUpper <=
                             nearestTick - (TICKS_RANGE / 2 - 1) * tickSpacing
@@ -140,6 +143,7 @@ export const PriceRange = ({
                         {upperPrice}
                     </div>
                     <button
+                        className="hover:scale-105 cursor-pointer transition-transform duration-300"
                         disabled={
                             tickUpper >=
                             nearestTick + (TICKS_RANGE / 2) * tickSpacing
@@ -163,7 +167,10 @@ export const PriceRange = ({
                 </div>
             </div>
             <div className="flex w-full justify-center my-2">
-                <button onClick={onFullRangeClick}>
+                <button
+                    className="hover:scale-105 cursor-pointer transition-transform duration-300"
+                    onClick={onFullRangeClick}
+                >
                     <GradientBorderWithNoShadow className="w-[6rem] h-[1.5rem] p-px flex justify-center items-center rounded-[32px]">
                         <div className="w-full h-full flex justify-center items-center rounded-[32px] bg-black-500 px-2">
                             FULL RANGE
