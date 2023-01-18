@@ -31,7 +31,7 @@ export const Menu = ({ subPageIndex, setSubPage }: Props) => {
                 onClick={() => setSubPage(1)}
             />
             <MenuButton
-                title="Buy  $Lake"
+                title="Buy Crypto"
                 iconSrc={subPageIndex !== 2 ? buy : buySelected}
                 isSelected={subPageIndex === 2}
                 onClick={() => setSubPage(2)}

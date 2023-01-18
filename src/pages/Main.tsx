@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import { BuyCrypto } from '../components/subPages/BuyLake';
 import { Dashboard } from '../components/subPages/Dashboard';
 import { Disclaimer } from '../components/disclaimer/Disclaimer';
 import { LOADING_DELAY } from '../constants/commons';
@@ -33,6 +34,7 @@ export const Main = () => {
                     <Page>
                         {subPageIndex === 0 && <Dashboard />}{' '}
                         {subPageIndex === 1 && <ProvideLiquidity />}
+                        {subPageIndex === 2 && <BuyCrypto />}
                     </Page>
                     <div className="w-full lg:hidden fixed bottom-0 flex justify-center">
                         <Menu

@@ -8,7 +8,7 @@ import { useContext } from 'react';
 const transakBasicConfig = {
     hostURL: window.location.origin,
     widgetHeight: '550px',
-    widgetWidth: '450px',
+    widgetWidth: window.innerWidth > 500 ? '450px' : '90vw',
     defaultNetwork: 'ethereum',
     network: 'ethereum',
     defaultFiatAmount: 1000,
